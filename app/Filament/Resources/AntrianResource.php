@@ -19,11 +19,14 @@ class AntrianResource extends Resource
 {
     protected static ?string $model = Antrian::class;
 
-    //ganti nama antrians jadi antrian
-
-    protected static ?string $pluralModelLabel = 'Data antrian';
+    protected static ?string $pluralModelLabel = 'Data antrian poli gigi';
 
     protected static ?string $navigationIcon = 'heroicon-o-queue-list';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Data antrian';
+    }
 
     public static function form(Form $form): Form
     {
