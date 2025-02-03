@@ -28,21 +28,21 @@ class PoliUmumController extends Controller
             'status' => 'menunggu',
         ]);
 
-        return redirect()->route('ambil-antrian')->with('success', "Nomor Antrian Anda: {$antrian->nomor_antrian}");
+        return redirect()->route('ambil-antrian-poliUmum')->with('success', "Nomor Antrian Anda: {$antrian->nomor_antrian}");
     }
 
     public function antrianBerjalan()
     {
-        return view('antrian.berjalan');
+        return view('poliumum.berjalan');
     }
 
-    public function getAntrianBerjalan()
+    public function getAntrianBerjalanPoliUmum()
     {
-        $antrianDipanggil = PoliUmum::where('status', 'dipanggil')->orderBy('updated_at', 'desc')->first();
+        $antrianDipanggil = PoliUmum::where('status', 'dipanggil')->latest('updated_at')->first();
         $antrianMenunggu = PoliUmum::where('status', 'menunggu')->orderBy('created_at', 'asc')->get();
 
         return response()->json([
-            'dipanggil' => $antrianDipanggil,
+            'dipanggil' => $antrianDipanggil ?: null,
             'menunggu' => $antrianMenunggu,
         ]);
     }

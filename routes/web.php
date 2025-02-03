@@ -14,8 +14,8 @@ Route::get('/antrian-berjalan', [AntrianController::class, 'antrianBerjalan'])->
 Route::get('/api/antrian-berjalan', [AntrianController::class, 'getAntrianBerjalan']);
 
 
-Route::get('/ambil-antrian-poli', [PoliUmumController::class, 'showForm'])->name('ambil-antrian');
-Route::post('/ambil-antrian', [PoliUmumController::class, 'store'])->name('store-antrian');
+Route::get('/ambil-antrian-poliUmum', [PoliUmumController::class, 'showForm'])->name('ambil-antrian-poliUmum');
+Route::post('/ambil-antrian-poliUmum', [PoliUmumController::class, 'store'])->name('store-antrian-PoliUmum');
 
-Route::get('/antrian-berjalan', [PoliUmumController::class, 'antrianBerjalan'])->name('antrian-berjalan');
-Route::get('/get-antrian-berjalan', [PoliUmumController::class, 'getAntrianBerjalan'])->name('get-antrian-berjalan');
+Route::get('/antrian-berjalan-poliUmum', [PoliUmumController::class, 'antrianBerjalan'])->name('antrian-berjalan-poliUmum');
+Route::get('/api/get-antrian-berjalan-PoliUmum', [PoliUmumController::class, 'getAntrianBerjalanPoliUmum']);

@@ -19,7 +19,7 @@
         </div>
         @endif
 
-        <form action="{{ route('store-antrian') }}" method="POST" class="space-y-4">
+        <form action="{{ route('store-antrian-PoliUmum') }}" method="POST" class="space-y-4">
             @csrf
 
             <div>
