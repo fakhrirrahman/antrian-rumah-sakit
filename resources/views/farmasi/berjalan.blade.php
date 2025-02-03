@@ -31,13 +31,6 @@
             color: red;
         }
 
-        .poli-info {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin-top: 10px;
-        }
-
         .list-antrian {
             text-align: left;
             margin-top: 20px;
@@ -60,10 +53,9 @@
 <body>
 
     <div class="container">
-        <h2>Antrian Poli Umum Saat Ini</h2>
+        <h2>Antrian Farmasi Saat Ini</h2>
         <p>Nomor yang sedang dipanggil:</p>
         <div class="nomor-antrian" id="dipanggil">-</div>
-        <p class="poli-info" id="poli-dipanggil">Poli: -</p>
 
         <h3>Menunggu:</h3>
         <div class="list-antrian">
@@ -75,11 +67,10 @@
 
     <script>
         function fetchAntrian() {
-            fetch('/api/get-antrian-berjalan-PoliUmum')
+            fetch('/api/antrian-berjalan-farmasi')
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('dipanggil').innerText = data.dipanggil ? data.dipanggil.nomor_antrian : '-';
-                    document.getElementById('poli-dipanggil').innerText = data.dipanggil ? "Poli: " + data.dipanggil.poli : "Poli: -";
 
                     let menungguList = document.getElementById('menunggu-list');
                     menungguList.innerHTML = '';

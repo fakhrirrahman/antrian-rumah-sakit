@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ambil Nomor Antrian poli Gigi</title>
+    <title>Ambil Nomor Antrian</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -42,7 +42,7 @@
         @if(session('success'))
         <p class="success">{{ session('success') }}</p>
         @endif
-        <form action="{{ route('ambil-antrian.store') }}" method="POST">
+        <form action="{{ route('ambil-antrian-farmasi.store') }}" method="POST">
             @csrf
             <input type="text" name="nama_pasien" placeholder="Masukkan Nama" required>
             <button type="submit" class="btn">Ambil Antrian</button>

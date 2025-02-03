@@ -40,6 +40,8 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
                 \App\Filament\Resources\AntrianPostResource\Widgets\BlogPostsChart::class,
+                \App\Filament\Resources\PoliUmumResource\Widgets\BlogPostsChart::class,
+                \App\Filament\Resources\FarmasiResource\Widgets\BlogPostsChart::class,
             ])
             ->middleware([
                 EncryptCookies::class,

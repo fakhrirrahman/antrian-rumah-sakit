@@ -14,7 +14,7 @@ use Filament\Tables\Columns\BadgeColumn;
 class PoliUmumResource extends Resource
 {
     protected static ?string $model = PoliUmum::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-queue-list';
     protected static ?string $pluralModelLabel = 'Data antrian Poli Umum';
 
     public static function getNavigationGroup(): ?string
@@ -32,9 +32,9 @@ class PoliUmumResource extends Resource
                     ->default(PoliUmum::generateNomorAntrian()),
                 Forms\Components\Select::make('poli')
                     ->options([
-                        'poli_1' => 'Poli 1',
-                        'poli_2' => 'Poli 2',
-                        'poli_3' => 'Poli 3',
+                        'poli 1' => 'Poli 1',
+                        'poli 2' => 'Poli 2',
+                        'poli 3' => 'Poli 3',
                     ])
                     ->required()
                     ->default('poli_1'),
@@ -67,9 +67,9 @@ class PoliUmumResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('poli')
                     ->options([
-                        'poli_1' => 'Poli 1',
-                        'poli_2' => 'Poli 2',
-                        'poli_3' => 'Poli 3',
+                        'poli 1' => 'Poli 1',
+                        'poli 2' => 'Poli 2',
+                        'poli 3' => 'Poli 3',
                     ]),
                 Tables\Filters\SelectFilter::make('status')
                     ->options([
@@ -84,9 +84,9 @@ class PoliUmumResource extends Resource
                     ->form([
                         Forms\Components\Select::make('poli_tujuan')
                             ->options([
-                                'poli_1' => 'Poli 1',
-                                'poli_2' => 'Poli 2',
-                                'poli_3' => 'Poli 3',
+                                'poli 1' => 'Poli 1',
+                                'poli 2' => 'Poli 2',
+                                'poli 3' => 'Poli 3',
                             ])
                             ->required()
                     ])
@@ -95,10 +95,10 @@ class PoliUmumResource extends Resource
                 Tables\Actions\Action::make('selesai')
                     ->label('Selesai')
                     ->action(function (PoliUmum $record) {
-                        if ($record->poli === 'poli_1') {
-                            $record->update(['poli' => 'poli_2', 'status' => 'menunggu']);
-                        } elseif ($record->poli === 'poli_2') {
-                            $record->update(['poli' => 'poli_3', 'status' => 'menunggu']);
+                        if ($record->poli === 'poli 1') {
+                            $record->update(['poli' => 'poli 2', 'status' => 'menunggu']);
+                        } elseif ($record->poli === 'poli 2') {
+                            $record->update(['poli' => 'poli 3', 'status' => 'menunggu']);
                         } else {
                             $record->update(['status' => 'selesai']);
                         }

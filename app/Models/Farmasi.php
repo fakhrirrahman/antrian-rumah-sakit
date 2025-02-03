@@ -19,7 +19,7 @@ class Farmasi extends Model
     ];
     public static function generateNomorAntrian()
     {
-        return 'A' . str_pad(Antrian::count() + 1, 3, '0', STR_PAD_LEFT);
+        return 'C' . str_pad(Antrian::count() + 1, 3, '0', STR_PAD_LEFT);
     }
 
     public static function boot()

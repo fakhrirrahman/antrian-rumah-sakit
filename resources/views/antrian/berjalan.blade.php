@@ -53,7 +53,7 @@
 <body>
 
     <div class="container">
-        <h2>Antrian Saat Ini</h2>
+        <h2>Antrian Poli Gigi Saat Ini</h2>
         <p>Nomor yang sedang dipanggil:</p>
         <div class="nomor-antrian" id="dipanggil">-</div>
 

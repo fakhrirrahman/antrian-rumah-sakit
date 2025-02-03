@@ -7,7 +7,7 @@ use Filament\Widgets\ChartWidget;
 
 class BlogPostsChart extends ChartWidget
 {
-    protected static ?string $heading = 'Jumlah Pasien Berdasarkan Status Antrian';
+    protected static ?string $heading = 'Statistik Antrian Poli Gigi';
 
     protected function getData(): array
     {
@@ -21,7 +21,7 @@ class BlogPostsChart extends ChartWidget
                 [
                     'label' => 'Jumlah Pasien',
                     'data' => [$menunggu, $dipanggil, $selesai],  // Data untuk setiap status antrian
-                    'backgroundColor' => ['#FF5733', '#33FF57', '#3357FF'],  // Warna untuk setiap dataset
+                    'backgroundColor' => ['#fbbf24', '#3b82f6', '#10b981'],  // Warna untuk setiap dataset
                 ]
             ]
         ];
