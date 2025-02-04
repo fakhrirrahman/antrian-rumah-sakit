@@ -31,7 +31,7 @@ class BlogPostsChart extends ChartWidget
                         $data['dipanggil'] ?? 0,
                         $data['selesai'] ?? 0,
                     ],
-                    'backgroundColor' => ['#fbbf24', '#3b82f6', '#22c55e'],
+                    'backgroundColor' => ['#fbbf24', '#3b82f6', '#10b981'],
                 ],
             ],
         ];

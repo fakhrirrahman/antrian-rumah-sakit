@@ -38,7 +38,7 @@
 
 <body>
     <div class="container">
-        <h2>Ambil Nomor Antrian Farmasi</h2>
+        <h2>Ambil Nomor Antrian Poli Gigi</h2>
         @if(session('success'))
         <p class="success">{{ session('success') }}</p>
         @endif
