@@ -3,16 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\FarmasiResource\Pages;
-use App\Filament\Resources\FarmasiResource\RelationManagers;
 use App\Models\Farmasi;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Actions\Action;
 
 class FarmasiResource extends Resource
 {
@@ -20,10 +18,12 @@ class FarmasiResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-queue-list';
     protected static ?string $pluralModelLabel = 'Data antrian farmasi';
+
     public static function getNavigationGroup(): ?string
     {
         return 'Data antrian';
     }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -38,7 +38,8 @@ class FarmasiResource extends Resource
                         'menunggu' => 'Menunggu',
                         'dipanggil' => 'Dipanggil',
                         'selesai' => 'Selesai',
-                    ])->default('menunggu'),
+                    ])
+                    ->default('menunggu'),
             ]);
     }
 
@@ -66,7 +67,6 @@ class FarmasiResource extends Resource
                     ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('panggil')
                     ->label('Panggil')
                     ->action(fn(Farmasi $record) => $record->update(['status' => 'dipanggil']))
@@ -75,6 +75,11 @@ class FarmasiResource extends Resource
                     ->label('Selesai')
                     ->action(fn(Farmasi $record) => $record->update(['status' => 'selesai']))
                     ->visible(fn(Farmasi $record) => $record->status === 'dipanggil'),
+                // Action untuk mencetak nomor antrian
+                Action::make('cetak_nomor_antrian')
+                    ->label('Cetak Struk')
+                    ->url(fn(Farmasi $record) => route('farmasi.cetak', ['id' => $record->id]))
+                    ->icon('heroicon-o-printer')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

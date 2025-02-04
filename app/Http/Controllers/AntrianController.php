@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Antrian;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AntrianController extends Controller
 {
@@ -43,5 +44,15 @@ class AntrianController extends Controller
             'dipanggil' => $antrianDipanggil,
             'menunggu' => $antrianMenunggu,
         ]);
+    }
+    public function print($id)
+    {
+        $antrian = Antrian::findOrFail($id);
+
+        // Misalnya kita menggunakan PDF, bisa diganti dengan tampilan HTML jika perlu
+        $pdf = PDF::loadView('antrian.print', compact('antrian'));
+
+        // Menghasilkan dan mengunduh file PDF
+        return $pdf->download('nomor_antrian_' . $antrian->nomor_antrian . '.pdf');
     }
 }

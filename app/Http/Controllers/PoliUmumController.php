@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PoliUmum;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PoliUmumController extends Controller
 {
@@ -45,5 +46,25 @@ class PoliUmumController extends Controller
             'dipanggil' => $antrianDipanggil ?: null,
             'menunggu' => $antrianMenunggu,
         ]);
+    }
+
+    public function cetakNomorAntrian($id)
+    {
+        // Ambil data berdasarkan ID
+        $antrian = PoliUmum::findOrFail($id);
+
+        // Data untuk view PDF
+        $data = [
+            'nomor_antrian' => $antrian->nomor_antrian,
+            'nama_pasien' => $antrian->nama_pasien,
+            'poli' => $antrian->poli,
+            'status' => $antrian->status,
+        ];
+
+        // Render PDF dengan view yang sudah dibuat
+        $pdf = Pdf::loadView('poliumum.cetak_nomor', $data);
+
+        // Download atau tampilkan PDF
+        return $pdf->download('nomor_antrian_' . $antrian->nomor_antrian . '.pdf');
     }
 }

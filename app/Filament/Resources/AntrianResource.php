@@ -10,10 +10,9 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\BadgeColumn;
-
+use Filament\Tables\Actions\Action;
+use Illuminate\Support\Facades\View;
 
 class AntrianResource extends Resource
 {
@@ -70,7 +69,6 @@ class AntrianResource extends Resource
                     ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('panggil')
                     ->label('Panggil')
                     ->action(fn(Antrian $record) => $record->update(['status' => 'dipanggil']))
@@ -79,6 +77,14 @@ class AntrianResource extends Resource
                     ->label('Selesai')
                     ->action(fn(Antrian $record) => $record->update(['status' => 'selesai']))
                     ->visible(fn(Antrian $record) => $record->status === 'dipanggil'),
+                Action::make('cetak')
+                    ->label('Cetak Struk')
+                    ->action(function (Antrian $record) {
+                        return redirect()->route('antrian.print', ['id' => $record->id]);
+                    })
+                    ->icon('heroicon-o-printer'),
+
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

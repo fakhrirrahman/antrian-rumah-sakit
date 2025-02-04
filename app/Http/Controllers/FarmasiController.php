@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Farmasi;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class FarmasiController extends Controller
 {
@@ -43,5 +44,16 @@ class FarmasiController extends Controller
             'dipanggil' => $antrianDipanggil,
             'menunggu' => $antrianMenunggu,
         ]);
+    }
+
+    public function cetak($id)
+    {
+        $farmasi = Farmasi::findOrFail($id);
+
+        // Misalnya kita menggunakan PDF, bisa diganti dengan tampilan HTML jika perlu
+        $pdf = PDF::loadView('farmasi.struk', compact('farmasi'));
+
+        // Menghasilkan dan mengunduh file PDF
+        return $pdf->download('nomor_antrian_' . $farmasi->nomor_antrian . '.pdf');
     }
 }

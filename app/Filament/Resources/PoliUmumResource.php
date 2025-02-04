@@ -64,20 +64,6 @@ class PoliUmumResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')->dateTime(),
             ])
-            ->filters([
-                Tables\Filters\SelectFilter::make('poli')
-                    ->options([
-                        'poli 1' => 'Poli 1',
-                        'poli 2' => 'Poli 2',
-                        'poli 3' => 'Poli 3',
-                    ]),
-                Tables\Filters\SelectFilter::make('status')
-                    ->options([
-                        'menunggu' => 'Menunggu',
-                        'dipanggil' => 'Dipanggil',
-                        'selesai' => 'Selesai',
-                    ]),
-            ])
             ->actions([
                 Tables\Actions\Action::make('panggil')
                     ->label('Panggil')
@@ -96,14 +82,21 @@ class PoliUmumResource extends Resource
                     ->label('Selesai')
                     ->action(function (PoliUmum $record) {
                         if ($record->poli === 'poli 1') {
+                            // Jika di poli 1, update ke poli 2 dan set status ke 'menunggu'
                             $record->update(['poli' => 'poli 2', 'status' => 'menunggu']);
                         } elseif ($record->poli === 'poli 2') {
+                            // Jika di poli 2, update ke poli 3 dan set status ke 'menunggu'
                             $record->update(['poli' => 'poli 3', 'status' => 'menunggu']);
-                        } else {
+                        } elseif ($record->poli === 'poli 3') {
+                            // Jika sudah di poli 3, set status ke 'selesai'
                             $record->update(['status' => 'selesai']);
                         }
                     })
                     ->visible(fn(PoliUmum $record) => $record->status === 'dipanggil'),
+                Tables\Actions\Action::make('cetak_nomor_antrian')
+                    ->label('Cetak Struk')
+                    ->url(fn(PoliUmum $record) => route('poliumum.cetak', ['id' => $record->id]))
+                    ->icon('heroicon-o-printer')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -111,6 +104,7 @@ class PoliUmumResource extends Resource
                 ]),
             ]);
     }
+
 
     public static function getPages(): array
     {
