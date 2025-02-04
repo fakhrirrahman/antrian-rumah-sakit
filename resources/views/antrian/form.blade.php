@@ -1,53 +1,26 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ambil Nomor Antrian poli Gigi</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
+@section('title', 'Ambil Nomor Antrian Poli Gigi')
 
-        .container {
-            max-width: 400px;
-            margin: auto;
-            padding: 20px;
-        }
-
-        .success {
-            color: green;
-            font-size: 20px;
-        }
-
-        .btn {
-            background: blue;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background: darkblue;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <h2>Ambil Nomor Antrian Poli Gigi</h2>
-        @if(session('success'))
-        <p class="success">{{ session('success') }}</p>
-        @endif
-        <form action="{{ route('ambil-antrian.store') }}" method="POST">
-            @csrf
-            <input type="text" name="nama_pasien" placeholder="Masukkan Nama" required>
-            <button type="submit" class="btn">Ambil Antrian</button>
-        </form>
+@section('content')
+<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg mt-10">
+    <h2 class="text-2xl font-bold text-center text-blue-600 mb-6">Ambil Nomor Antrian Poli Gigi</h2>
+    @if(session('success'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+        {{ session('success') }}
     </div>
-</body>
-
-</html>
+    @endif
+    <form action="{{ route('ambil-antrian.store') }}" method="POST" class="space-y-6">
+        @csrf
+        <div>
+            <label for="nama_pasien" class="block text-sm font-medium text-gray-700">Nama Pasien</label>
+            <input type="text" name="nama_pasien" id="nama_pasien" placeholder="Masukkan Nama" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <button type="submit"
+            class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+            Ambil Antrian
+        </button>
+    </form>
+</div>
+@endsection

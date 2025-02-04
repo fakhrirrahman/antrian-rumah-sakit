@@ -21,5 +21,5 @@ Route::get('/api/get-antrian-berjalan-PoliUmum', [PoliUmumController::class, 'ge
 //farmasi
 Route::get('/ambil-antrian-farmasi', [FarmasiController::class, 'showForm'])->name('ambil-antrian-farmasi');
 Route::post('/ambil-antrian-farmasi', [FarmasiController::class, 'store'])->name('ambil-antrian-farmasi.store');
-Route::get('/antrian-berjalan-farmasi', [FarmasiController::class, 'antrianBerjalan'])->name('antrian.berjalan');
+Route::get('/antrian-berjalan-farmasi', [FarmasiController::class, 'antrianBerjalan'])->name('antrian.berjalan-farmasi');
 Route::get('/api/antrian-berjalan-farmasi', [FarmasiController::class, 'getAntrianBerjalan']);

@@ -5,71 +5,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Antrian Berjalan</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: #f4f4f4;
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
-        .container {
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            color: #333;
-        }
-
-        .nomor-antrian {
-            font-size: 50px;
-            font-weight: bold;
-            color: red;
-        }
-
-        .poli-info {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin-top: 10px;
-        }
-
-        .list-antrian {
-            text-align: left;
-            margin-top: 20px;
-        }
-
-        .list-antrian ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .list-antrian li {
-            padding: 10px;
-            background: #ddd;
-            margin-bottom: 5px;
-            border-radius: 5px;
+        .animate-pulse {
+            animation: pulse 1.5s infinite;
         }
     </style>
 </head>
 
-<body>
+<body class="bg-gradient-to-br from-blue-500 to-indigo-600 min-h-screen flex items-center justify-center p-6">
 
-    <div class="container">
-        <h2>Antrian Poli Umum Saat Ini</h2>
-        <p>Nomor yang sedang dipanggil:</p>
-        <div class="nomor-antrian" id="dipanggil">-</div>
-        <p class="poli-info" id="poli-dipanggil">Poli: -</p>
+    <div class="bg-white rounded-xl shadow-2xl w-full max-w-3xl p-8 transform hover:scale-105 transition duration-500">
+        <h2 class="text-4xl font-extrabold text-center text-blue-700 mb-6 uppercase">Antrian Poli Umum</h2>
 
-        <h3>Menunggu:</h3>
-        <div class="list-antrian">
-            <ul id="menunggu-list">
-                <li>Loading...</li>
-            </ul>
+        <div class="text-center mb-8">
+            <p class="text-gray-600 text-lg font-semibold">Nomor yang sedang dipanggil:</p>
+            <div id="dipanggil"
+                class="text-7xl font-extrabold text-red-600 animate-pulse bg-gray-100 p-6 rounded-lg shadow-lg">-</div>
+            <p class="text-gray-600 text-lg font-semibold mt-4" id="poli-dipanggil">Poli: -</p>
+        </div>
+
+        <div>
+            <h3 class="text-2xl font-semibold text-gray-900 mb-4">Daftar Antrian:</h3>
+            <div class="bg-gray-50 p-4 rounded-lg shadow-md overflow-hidden">
+                <ul id="menunggu-list" class="text-gray-700 space-y-3 divide-y divide-gray-300">
+                    <li class="bg-white p-4 rounded-lg shadow-md animate-pulse">Loading...</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="text-center mt-6">
+            <a href="javascript:history.back()"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition duration-300">Kembali</a>
         </div>
     </div>
 
@@ -78,27 +59,34 @@
             fetch('/api/get-antrian-berjalan-PoliUmum')
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('dipanggil').innerText = data.dipanggil ? data.dipanggil.nomor_antrian : '-';
-                    document.getElementById('poli-dipanggil').innerText = data.dipanggil ? "Poli: " + data.dipanggil.poli : "Poli: -";
+                    const dipanggilElement = document.getElementById('dipanggil');
+                    dipanggilElement.innerText = data.dipanggil ? data.dipanggil.nomor_antrian : '-';
 
-                    let menungguList = document.getElementById('menunggu-list');
+                    const poliDipanggil = document.getElementById('poli-dipanggil');
+                    poliDipanggil.innerText = data.dipanggil ? "Poli: " + data.dipanggil.poli : "Poli: -";
+
+                    const menungguList = document.getElementById('menunggu-list');
                     menungguList.innerHTML = '';
-
+                    
                     if (data.menunggu.length > 0) {
                         data.menunggu.forEach(antrian => {
-                            let li = document.createElement('li');
-                            li.innerText = antrian.nomor_antrian + " - " + antrian.nama_pasien;
+                            const li = document.createElement('li');
+                            li.className = 'bg-white p-4 rounded-lg shadow-md hover:bg-gray-200 transition duration-300';
+                            li.innerText = `Nomor ${antrian.nomor_antrian} - ${antrian.nama_pasien}`;
                             menungguList.appendChild(li);
                         });
                     } else {
-                        menungguList.innerHTML = '<li>Tidak ada antrian menunggu</li>';
+                        const li = document.createElement('li');
+                        li.className = 'bg-white p-4 rounded-lg shadow-md';
+                        li.innerText = 'Tidak ada antrian menunggu';
+                        menungguList.appendChild(li);
                     }
                 })
                 .catch(error => console.error('Error:', error));
         }
 
-        setInterval(fetchAntrian, 3000); // Update setiap 3 detik
-        fetchAntrian(); // Load pertama kali
+        setInterval(fetchAntrian, 3000);
+        fetchAntrian();
     </script>
 
 </body>
