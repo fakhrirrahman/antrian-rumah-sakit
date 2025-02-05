@@ -50,10 +50,8 @@ class PoliUmumController extends Controller
 
     public function cetakNomorAntrian($id)
     {
-        // Ambil data berdasarkan ID
         $antrian = PoliUmum::findOrFail($id);
 
-        // Data untuk view PDF
         $data = [
             'nomor_antrian' => $antrian->nomor_antrian,
             'nama_pasien' => $antrian->nama_pasien,
@@ -61,10 +59,8 @@ class PoliUmumController extends Controller
             'status' => $antrian->status,
         ];
 
-        // Render PDF dengan view yang sudah dibuat
         $pdf = Pdf::loadView('poliumum.cetak_nomor', $data);
 
-        // Download atau tampilkan PDF
         return $pdf->download('nomor_antrian_' . $antrian->nomor_antrian . '.pdf');
     }
 }
