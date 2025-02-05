@@ -3,15 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class PoliUmum extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $table = 'poli_umum';
-    protected $fillable = ['nama_pasien', 'nomor_antrian', 'poli', 'status', 'deleted_at'];
+    protected $fillable = ['nama_pasien', 'nomor_antrian', 'poli', 'status'];
 
     const STATUS = [
         'menunggu' => 'Menunggu',

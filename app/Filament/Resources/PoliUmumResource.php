@@ -82,13 +82,10 @@ class PoliUmumResource extends Resource
                     ->label('Selesai')
                     ->action(function (PoliUmum $record) {
                         if ($record->poli === 'poli 1') {
-                            // Jika di poli 1, update ke poli 2 dan set status ke 'menunggu'
-                            $record->update(['poli' => 'poli 2', 'status' => 'menunggu']);
+                            $record->update(['poli' => 'poli 1', 'status' => 'selesai']);
                         } elseif ($record->poli === 'poli 2') {
-                            // Jika di poli 2, update ke poli 3 dan set status ke 'menunggu'
-                            $record->update(['poli' => 'poli 3', 'status' => 'menunggu']);
+                            $record->update(attributes: ['poli' => 'poli 2', 'status' => 'selesai']);
                         } elseif ($record->poli === 'poli 3') {
-                            // Jika sudah di poli 3, set status ke 'selesai'
                             $record->update(['status' => 'selesai']);
                         }
                     })

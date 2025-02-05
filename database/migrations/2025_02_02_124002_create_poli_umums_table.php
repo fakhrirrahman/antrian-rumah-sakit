@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('nomor_antrian');
             $table->string('poli');
             $table->enum('status', ['menunggu', 'dipanggil', 'selesai'])->default('menunggu');
-            $table->softDeletes();
             $table->timestamps();
         });
     }
