@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Farmasi extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = 'antrians';
+    protected $table = 'farmasi';
     protected $fillable = ['nama_pasien', 'nomor_antrian', 'status', 'deleted_at'];
 
     const STATUS = [
@@ -19,7 +19,7 @@ class Farmasi extends Model
     ];
     public static function generateNomorAntrian()
     {
-        return 'C' . str_pad(Antrian::count() + 1, 3, '0', STR_PAD_LEFT);
+        return 'C' . str_pad(Farmasi::count() + 1, 3, '0', STR_PAD_LEFT);
     }
 
     public static function boot()
