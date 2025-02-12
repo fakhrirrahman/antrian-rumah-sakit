@@ -60,7 +60,6 @@ class PoliUmumController extends Controller
         ];
 
         $pdf = Pdf::loadView('poliumum.cetak_nomor', $data);
-
         return $pdf->download('nomor_antrian_' . $antrian->nomor_antrian . '.pdf');
     }
 }

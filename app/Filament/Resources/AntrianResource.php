@@ -14,6 +14,8 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Actions\Action;
 use Illuminate\Support\Facades\View;
 
+
+
 class AntrianResource extends Resource
 {
     protected static ?string $model = Antrian::class;
@@ -25,6 +27,17 @@ class AntrianResource extends Resource
     public static function getNavigationGroup(): ?string
     {
         return 'Data antrian';
+    }
+    protected static ?string $navigationLabel = 'Data Antrian Poli Gigi';
+
+    protected static ?string $pluralLabel = 'Antrian';
+
+    public static function getActions(): array
+    {
+        return [
+            Tables\Actions\CreateAction::make()
+                ->label('Tambah Antrian Baru'),
+        ];
     }
 
     public static function form(Form $form): Form
@@ -100,6 +113,14 @@ class AntrianResource extends Resource
         ];
     }
 
+    // public static function getPages(): array
+    // {
+    //     return [
+    //         'index' => Pages\ListAntrians::route('/'),
+    //         'create' => Pages\CreateAntrian::route('/create'),
+    //         'edit' => Pages\EditAntrian::route('/{record}/edit'),
+    //     ];
+    // }
     public static function getPages(): array
     {
         return [

@@ -49,11 +49,7 @@ class FarmasiController extends Controller
     public function cetak($id)
     {
         $farmasi = Farmasi::findOrFail($id);
-
-        // Misalnya kita menggunakan PDF, bisa diganti dengan tampilan HTML jika perlu
         $pdf = PDF::loadView('farmasi.struk', compact('farmasi'));
-
-        // Menghasilkan dan mengunduh file PDF
         return $pdf->download('nomor_antrian_' . $farmasi->nomor_antrian . '.pdf');
     }
 }
