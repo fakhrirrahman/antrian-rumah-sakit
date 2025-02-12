@@ -29,6 +29,6 @@ class BlogPostsChart extends ChartWidget
 
     protected function getType(): string
     {
-        return 'bar'; // Bisa ganti dengan tipe chart lain seperti 'bar', 'line', dll.
+        return 'line'; // Bisa ganti dengan tipe chart lain seperti 'bar', 'line', dll.
     }
 }

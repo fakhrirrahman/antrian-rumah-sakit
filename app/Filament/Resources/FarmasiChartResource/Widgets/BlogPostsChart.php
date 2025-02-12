@@ -11,7 +11,7 @@ class BlogPostsChart extends ChartWidget
 
     protected function getType(): string
     {
-        return 'bar';
+        return 'line';
     }
 
     protected function getData(): array
