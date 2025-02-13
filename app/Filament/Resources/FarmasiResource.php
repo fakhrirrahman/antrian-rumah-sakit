@@ -69,8 +69,22 @@ class FarmasiResource extends Resource
             ->actions([
                 Tables\Actions\Action::make('panggil')
                     ->label('Panggil')
-                    ->action(fn(Farmasi $record) => $record->update(['status' => 'dipanggil']))
-                    ->visible(fn(Farmasi $record) => $record->status === 'menunggu'),
+                    ->action(function (Farmasi $record) {
+                        $record->update(['status' => 'dipanggil']);
+                    })
+                    ->visible(fn(Farmasi $record) => $record->status === 'menunggu')
+                    ->button()
+                    ->color('primary')
+                    ->extraAttributes(fn(Farmasi $record) => [
+                        'data-nomor' => $record->nomor_antrian,
+                        'data-nama' => $record->nama_pasien,
+                        'onclick' => 'panggilNomorAntrian(this.dataset.nomor, this.dataset.nama)',
+                    ]),
+
+                // Tables\Actions\Action::make('panggil')
+                //     ->label('Panggil')
+                //     ->action(fn(Farmasi $record) => $record->update(['status' => 'dipanggil']))
+                //     ->visible(fn(Farmasi $record) => $record->status === 'menunggu'),
                 Tables\Actions\Action::make('selesai')
                     ->label('Selesai')
                     ->action(fn(Farmasi $record) => $record->update(['status' => 'selesai']))

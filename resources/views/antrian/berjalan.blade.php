@@ -50,7 +50,6 @@
             </div>
         </div>
 
-
         <!-- Antrian Poli Umum -->
         <div class="bg-white rounded-xl shadow-xl transform hover:scale-105 transition duration-500">
             <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white text-center py-4 rounded-t-xl">
@@ -62,9 +61,6 @@
                     class="text-6xl font-extrabold text-red-600 animate-pulse bg-gray-100 p-6 rounded-lg shadow-lg text-center">
                     -
                 </div>
-                <p id="poli-info-umum" class="text-gray-700 text-lg text-center font-semibold mt-4">
-                    <!-- Informasi poli akan diisi oleh JavaScript -->
-                </p>
                 <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-4">Daftar Antrian:</h3>
                 <div class="bg-gray-50 p-4 rounded-lg shadow-inner max-h-80 overflow-y-auto">
                     <ul id="menunggu-list-umum" class="text-gray-700 space-y-3 divide-y divide-gray-300">
@@ -94,26 +90,49 @@
             </div>
         </div>
 
-
         <script>
+            const lastAntrian = {
+                gigi: null,
+                farmasi: null,
+                umum: null
+            };
+        
+            function panggilNomorAntrian(nomorAntrian, namaPasien) {
+                const message = `Nomor antrian ${nomorAntrian}, atas nama ${namaPasien}, silahkan menuju loket.`;
+                const synth = window.speechSynthesis;
+        
+                // Hentikan semua suara yang sedang diproses
+                if (synth.speaking) {
+                    synth.cancel();
+                }
+        
+                const utterance = new SpeechSynthesisUtterance(message);
+                utterance.lang = 'id-ID';
+                utterance.rate = 1; // Kecepatan berbicara
+                synth.speak(utterance);
+            }
+            
+        
             async function fetchAntrian(poli, endpoint) {
                 try {
                     const response = await fetch(endpoint);
                     if (!response.ok) throw new Error(`Gagal mengambil data antrian ${poli}`);
-        
                     const data = await response.json();
         
-                    // Update elemen "dipanggil"
                     const dipanggilElement = document.getElementById(`dipanggil-${poli}`);
-                    dipanggilElement.innerText = data.dipanggil ? data.dipanggil.nomor_antrian : '-';
+                    const currentNumber = dipanggilElement.innerText;
         
-                    // Update informasi poli (khusus Poli Umum)
-                    if (poli === 'umum') {
-                        const poliInfoElement = document.getElementById('poli-info-umum');
-                        poliInfoElement.innerText = data.dipanggil ? `Poli: ${data.dipanggil.poli}` : 'Poli: -';
+                    // Jika nomor antrian berubah, panggil suara
+                    if (data.dipanggil && data.dipanggil.nomor_antrian !== currentNumber) {
+                        dipanggilElement.innerText = data.dipanggil.nomor_antrian;
+        
+                        // Panggil suara hanya jika nomor antrian belum diproses
+                        if (lastAntrian[poli] !== data.dipanggil.nomor_antrian) {
+                            lastAntrian[poli] = data.dipanggil.nomor_antrian;
+                            panggilNomorAntrian(data.dipanggil.nomor_antrian, data.dipanggil.nama_pasien);
+                        }
                     }
         
-                    // Update daftar "menunggu"
                     const menungguList = document.getElementById(`menunggu-list-${poli}`);
                     menungguList.innerHTML = '';
         
@@ -141,14 +160,13 @@
                 fetchAntrian('umum', '/api/get-antrian-berjalan-PoliUmum');
             }
         
-            // Panggil fungsi fetch setiap 3 detik
             setInterval(() => {
                 initializeFetch();
             }, 3000);
         
-            // Ambil data antrian pertama kali saat halaman dimuat
             initializeFetch();
         </script>
+
 </body>
 
 </html>
